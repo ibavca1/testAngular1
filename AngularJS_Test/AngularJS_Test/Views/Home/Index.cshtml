@@ -6,18 +6,30 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.28/angular.min.js"></script>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.8/angular.min.js"></script> -->
     <script type="text/javascript">
-        function ListCtrls($scope)
-        {
+        function ListCtrls($scope) {
+            $scope.action = function () {
+                console.log($scope);
+            }
             $scope.names = ['1', '2', '3', '4'];
         }
     </script>
 </head>
-<body>
+<body ng-init="list=['Test1','Test2','Test3']">
     <h2>AngularJS</h2>
     <hr />
     <div ng-controller="ListCtrls">
         <ol>
-            <li ng-repeat="name in names">Список из $scope: {{name}}</li>
+            <li ng-repeat="name in names">
+                Список из $scope: {{name}}
+                <button ng-click="action()">Посмотреть</button>
+            </li>
+        </ol>
+    </div>
+    <div>
+        <input ng-model="list" ng-list /><br />
+        <pre>list={{list}}</pre><br />
+        <ol>
+            <li ng-repeat="item in list">{{item}}</li>
         </ol>
     </div>
 </body>
