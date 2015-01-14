@@ -13,7 +13,11 @@
 <body>
     <h2>AngularJS</h2>
     <hr />
-
+    <div ng-controller="ListCtrls">
+        <ol>
+            <li ng-repeat="name in names">Список из $scope: {{name}}</li>
+        </ol>
+    </div>
 </body>
 </html>
 
