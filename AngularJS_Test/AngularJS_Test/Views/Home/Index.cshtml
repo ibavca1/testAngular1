@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html ng-app>
+<html ng-app="directive">
 <head>
     <title>Test AngularJS</title>
     <!-- <script src="~/scripts/angular.min.js"></script> -->
@@ -12,9 +12,43 @@
             }
             $scope.names = ['1', '2', '3', '4'];
         }
+
+        function FilterCtrls($scope)
+        {
+            $scope.items = [
+                { id: 1, text: 'Chrom' },
+                { id: 2, text: 'Safari' },
+                { id: 3, text: 'IE10' },
+                { id: 4, text: 'IE11' }
+            ];
+        }
+
+        //Это создание директив разобраться с ng-embed-app
+        angular.module('directive', []).directive('contenteditable', function () {
+            return {
+                require: 'ngModel',
+                link: function (scope, elm, attrs, ctrl) {
+                     //вид -> модель
+                    elm.bind('blur', function () {
+                        scope.$apply(function () {
+                            ctrl.$setViewValue(elm.html());
+                        });
+                    });
+
+                     //модель -> вид
+                    ctrl.$render = function (value) {
+                        elm.html(value);
+                    };
+
+                     //загрузка начального значения из DOM
+                    ctrl.$setViewValue(elm.html());
+                }
+            };
+        });
     </script>
+    <link type="text/css" rel="stylesheet" href="~/Styles/AngularJS.css" />
 </head>
-<body ng-init="list=['Test1','Test2','Test3']">
+<body ng-init="list=['Test1','Test2','Test3']; content='Нажми что бы изменить'">
     <h2>AngularJS</h2>
     <hr />
     <div ng-controller="ListCtrls">
@@ -25,11 +59,29 @@
             </li>
         </ol>
     </div>
+
+    <!-- Урок 2 (Модели) -->
     <div>
         <input ng-model="list" ng-list /><br />
         <pre>list={{list}}</pre><br />
         <ol>
             <li ng-repeat="item in list">{{item}}</li>
+        </ol>
+    </div>
+
+    <!-- Урок 3 (Дерективы) -->
+    <div>
+        <div contenteditable="true" ng-model="content">Нажми что бы изменить</div>
+        <pre>model = {{content}}</pre>
+    </div>
+
+    <!-- Урок 4 (Фильтры) -->
+    <input ng-model="predicate" />
+    <div ng-controller="FilterCtrls">
+        <ol>
+            <li ng-repeat="item in items|filter:predicate|orderBy:'text'">
+                {{item.id}}&nbsp;|&nbsp;{{item.text}}
+            </li>
         </ol>
     </div>
 </body>
