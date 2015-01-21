@@ -40,11 +40,22 @@ namespace AngularJS_Test.Models
             }
         }
 
-        public List<modelConnection> Tables 
+        public List<string> Tables 
         {
             get 
             {
-                return null;
+                List<string> result = new List<string>();
+                if (connection!=null)
+                {
+                    MySqlDataReader rdr = null;
+                    MySqlCommand cmd = new MySqlCommand("SHOW TABLES", connection);
+                    rdr = cmd.ExecuteReader();
+                    while(rdr.Read())
+                    {
+                        result.Add(rdr.GetString(0));
+                    }
+                }
+                return result;
             }
         }
 

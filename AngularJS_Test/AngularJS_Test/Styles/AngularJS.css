@@ -5,3 +5,7 @@ div[contentEditable]{
     margin-bottom:1px;
     margin-left:1px;
 }
+
+li.nostyle{
+    list-style-type:none;
+}

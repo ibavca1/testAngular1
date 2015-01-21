@@ -76,11 +76,15 @@
     </div>
 
     <!-- Урок 4 (Фильтры) -->
-    <input ng-model="predicate" />
+    <label>Фильтр по названию:</label>
+    <input ng-model="predicate.text" />
+    <br />
+    <label>Фильтр по номеру:</label>
+    <input ng-model="predicate.id" />
     <div ng-controller="FilterCtrls">
         <ol>
-            <li ng-repeat="item in items|filter:predicate|orderBy:'text'">
-                {{item.id}}&nbsp;|&nbsp;{{item.text}}
+            <li class="nostyle" ng-repeat="item in items|filter:predicate">
+                {{item.id}}.&nbsp;{{item.text}}
             </li>
         </ol>
     </div>
